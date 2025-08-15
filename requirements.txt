@@ -1,5 +1,5 @@
 # SAP HANA Python driver
 hdbcli>=2.19.24
 
-# MCP server framework
-mcp>=0.1.0
+# MCP server framework (FastMCP available)
+mcp>=1.12.4
