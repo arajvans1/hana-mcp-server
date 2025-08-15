@@ -5,7 +5,6 @@ import asyncio
 from pathlib import Path
 from hdbcli import dbapi
 from mcp.server import Server
-from mcp.server.models import Tool
 
 CONFIG_FILE = Path(__file__).parent / "hana_config.json"
 
@@ -87,11 +86,30 @@ def run_sql(query):
 # --- MCP server setup ---
 server = Server("hana-mcp")
 
-# Explicit tool registration
-server.add_tool(Tool(name="list_schemas", description="List all schemas", handler=lambda: list_schemas()))
-server.add_tool(Tool(name="list_tables", description="List tables in schema", handler=lambda schema: list_tables(schema)))
-server.add_tool(Tool(name="describe_table", description="Describe a table", handler=lambda schema, table: describe_table(schema, table)))
-server.add_tool(Tool(name="run_sql", description="Run arbitrary SQL", handler=lambda query: run_sql(query)))
+# Inline tool registration
+server.add_tool(
+    name="list_schemas",
+    description="List all schemas in HANA",
+    handler=lambda: list_schemas()
+)
+
+server.add_tool(
+    name="list_tables",
+    description="List tables in schema",
+    handler=lambda schema: list_tables(schema)
+)
+
+server.add_tool(
+    name="describe_table",
+    description="Describe a table",
+    handler=lambda schema, table: describe_table(schema, table)
+)
+
+server.add_tool(
+    name="run_sql",
+    description="Run arbitrary SQL",
+    handler=lambda query: run_sql(query)
+)
 
 # --- CLI vs MCP mode ---
 if __name__ == "__main__":
