@@ -1,0 +1,6 @@
+{
+  "host": "hana.company.com",
+  "port": 443,
+  "user": "MY_USER",
+  "password": "MY_PASSWORD"
+}
